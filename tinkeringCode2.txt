@@ -1,0 +1,16 @@
+from picamera2 import Picamera2
+from gpiozero import MotionSensor
+import os
+pir = MotionSensor(4)
+picam2 = Picamera2() 
+video_folder = 'videos'
+os.makedirs(video_folder, exist_ok =True)
+seg = 0
+while True:
+    pir.wait_for_motion()
+    print('Motion Dectected')
+    #picam2.start and record video('a.mp4',duration=10)
+    video_file = os.path.join(video_folder, f"segment_{seg}.mp4")
+    picam2.start_and_record_video(video_file, duration=10)
+    print(f"Saved:{video_file}.mp4")
+    seg += 1
